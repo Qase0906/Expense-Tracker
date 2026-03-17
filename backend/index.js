@@ -47,6 +47,12 @@ app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 
 
+app.get('/', (req, res) => {
+  res.status(200).json({
+    message: "Expense Api is running"
+  })
+})
+
 
 // Error handles
 app.use(loggers);
