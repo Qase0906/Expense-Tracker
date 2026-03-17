@@ -30,7 +30,7 @@ const options = {
       }
     ]
   },
-  apis: ['./routes/*.js'] // Where your route files live
+  apis: ['./backend/**/*.js'] // Where your route files live
 };
 
 export const swaggerSpec = swaggerJSDoc(options);
