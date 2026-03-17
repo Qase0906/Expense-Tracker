@@ -9,10 +9,10 @@ import { expenseValidator } from "../Schema/expenseSchema.js"
 
 /**
  * @swagger
- * /Expenses: 
+ * /expenses: 
  *   get:
  *      summary: Get all expenses for the logged in user
- *      tag: [Expenses]
+ *      tags: [Expenses]
  *      security:
  *          - bearerAuth: []
  *      responses: 

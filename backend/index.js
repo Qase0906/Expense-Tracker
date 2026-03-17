@@ -24,15 +24,13 @@ import morgan from "morgan";
 import cors from 'cors'
 
 app.use(helmet())
-app.use(cors({
-  origin: ["http://localhost:3000"]
-}))
+app.use(cors())
 
 if(process.env.MODE_ENV === 'development'){
   app.use(morgan('dev'))
 }
 
-app.use(limiter)
+// app.use(limiter)
 
 // ROUTES
 app.use("/auth", authRoutes);
