@@ -1,4 +1,6 @@
 import swaggerJSDoc from 'swagger-jsdoc';
+import dotenv from "dotenv"
+dotenv.config()
 
 const options = {
   definition: {
@@ -10,7 +12,7 @@ const options = {
     },
     servers: [
       {
-        url: 'http://localhost:3000'
+        url: process.env.MODE_ENV == 'development' ? 'http://localhost:3000' : 'https://expense-tracker-w2f1.onrender.com'
       }
     ],
     components: {
