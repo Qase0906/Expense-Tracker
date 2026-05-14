@@ -1,7 +1,7 @@
 import axios from "axios";
 import useAuthStore from "../store/authStore";
 
-const API_URL = "http://localhost:3000/api";
+const API_URL = "https://expense-tracker-w2f1.onrender.com/api";
 
 const api = axios.create({
   baseURL: API_URL,
