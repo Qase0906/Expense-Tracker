@@ -65,12 +65,12 @@ app.get("/api/health", (req, res) => {
 // }
 
 if (process.env.NODE_ENV === "production") {
-  const __dirname = path.dirname(fileURLToPath(import.meta.url));
+  const _dirname = path.dirname(fileURLToPath(import.meta.url));
 
-  app.use(express.static(path.join(__dirname, "../frontend/dist")));
+  app.use(express.static(path.join(_dirname, "../frontend/dist")));
 
-  app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "../frontend/dist/index.html"));
+  app.get(/.*/, (req, res) => {
+    res.sendFile(path.resolve(_dirname, "../frontend/dist/index.html"));
   });
 }
 
