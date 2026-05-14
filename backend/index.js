@@ -59,7 +59,7 @@ app.get("/api/health", (req, res) => {
 if (process.env.NODE_ENV === "production") {
   const _dirname = path.dirname(fileURLToPath(import.meta.url));
 
-  app.use(express.static(path.join(-dirname, "../frontend/dist")));
+  app.use(express.static(path.join(_dirname, "../frontend/dist")));
 
   // serve the frontend app
   app.use(/.*/, (req, res) => {
