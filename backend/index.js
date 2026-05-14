@@ -31,7 +31,7 @@ import cors from "cors";
 app.use(helmet());
 app.use(
   cors({
-    origin: ["https://expense-tracker-w2f1.onrender.com/api"],
+    origin: ["https://expense-tracker-w2f1.onrender.com"],
   }),
 );
 
