@@ -3,7 +3,6 @@ const app = express();
 
 app.use(express.json());
 
-// const API_URL = "https://expense-tracker-w2f1.onrender.com"
 
 import path from "path";
 import { fileURLToPath } from "url";
@@ -29,11 +28,7 @@ import morgan from "morgan";
 import cors from "cors";
 
 app.use(helmet());
-app.use(
-  cors({
-    origin: ["https://expense-tracker-w2f1.onrender.com"],
-  }),
-);
+app.use(cors());
 
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
