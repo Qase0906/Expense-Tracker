@@ -79,15 +79,24 @@ app.use(loggers);
 app.use(notFound);
 app.use(globalErrorHandler);
 
-mongoose
-  .connect(
-    process.env.NODE_ENV == "development"
-      ? process.env.MONGO_URI_DEV
-      : process.env.MONGO_URI_PRO,
-  )
-  .then(() => console.log("connection Successfull"))
-  .catch((err) => console.log("connection Failed: ", err));
+const mongoURI =
+  process.env.NODE_ENV === "development"
+    ? process.env.MONGO_URI_DEV
+    : process.env.MONGO_URI_PRO;
 
-app.listen(PORT, () => {
-  console.log(`Server is running: http://localhost:${PORT}`);
-});
+mongoose
+  .connect(mongoURI)
+  .then(() => {
+    console.log("MongoDB connected");
+
+    app.listen(PORT, () => {
+      console.log(`Server is running on ${PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.error("MongoDB connection failed:", err);
+  });
+
+// app.listen(PORT, () => {
+//   console.log(`Server is running: http://localhost:${PORT}`);
+// });
