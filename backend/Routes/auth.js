@@ -41,7 +41,7 @@ router.post('/login', login)
 
 // Protected routes
 router.get('/profile', protect, (req, res) => {
-    res.json({message: `welcome to your profile ${req.user.name}`})
+    res.json(req.user)
 })
 
 

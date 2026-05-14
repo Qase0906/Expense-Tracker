@@ -20,7 +20,7 @@ import { expenseValidator } from "../Schema/expenseSchema.js"
  *             description: A list of tasks 
  */
 
-router.get('/', protect, getExpenses)
+router.get('/', protect, getExpenses) //add protect
 
 /**
  * @swagger
@@ -56,7 +56,7 @@ router.get('/', protect, getExpenses)
  *         description: expense created
  */
 
-router.post('/', protect, validator(expenseValidator), createExpenses)
+router.post('/', protect, createExpenses)
 
 /**
  * @swagger

@@ -4,8 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index.js",
-    "start": "node index.js"
+    "server": "nodemon backend/index.js",
+    "start": "node backend/index.js",
+    "client": "npm run dev --prefix frontend",
+    "dev": "concurrently \"npm run server\" \"npm run client\" ",
+    "build": "npm install && npm install --prefix frontend --production=false && npm run build --prefix frontend"
   },
   "keywords": [],
   "author": "",
@@ -21,11 +24,13 @@
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.2.4",
     "morgan": "^1.10.1",
+    "react-hot-toast": "^2.6.0",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1",
     "zod": "^4.3.6"
   },
   "devDependencies": {
+    "concurrently": "^9.2.1",
     "nodemon": "^3.1.14"
   }
 }

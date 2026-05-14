@@ -3,6 +3,9 @@ const app = express();
 
 app.use(express.json());
 
+import path from "path";
+import { fileURLToPath } from "url";
+
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -19,38 +22,51 @@ import { loggers } from "./middlewares/loggers.js";
 import { globalErrorHandler } from "./middlewares/globalErrorHandler.js";
 
 import { limiter } from "./middlewares/rateLimiter.js";
-import helmet from "helmet"
+import helmet from "helmet";
 import morgan from "morgan";
-import cors from 'cors'
+import cors from "cors";
 
-app.use(helmet())
-app.use(cors())
+app.use(helmet());
+app.use(
+  cors({
+    origin: ["http://localhost:5173"],
+  }),
+);
 
-if(process.env.MODE_ENV === 'development'){
-  app.use(morgan('dev'))
+if (process.env.NODE_ENV === "development") {
+  app.use(morgan("dev"));
 }
 
-// app.use(limiter)
+app.use(limiter);
 
 // ROUTES
-app.use("/auth", authRoutes);
-app.use("/users", usersRoutes);
-app.use("/expenses", expenseRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api/users", usersRoutes);
+app.use("/api/expenses", expenseRoutes);
 
+import swaggerUi from "swagger-ui-express";
+import { swaggerSpec } from "./utils/swagger.js";
 
-import swaggerUi from 'swagger-ui-express';
-import { swaggerSpec } from './utils/swagger.js';
+app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-
-
-
-app.get('/', (req, res) => {
+app.get("/api/health", (req, res) => {
   res.status(200).json({
-    message: "Expense Api is running"
-  })
-})
+    message: "Server Api is running....😊",
+  });
+});
 
+// Server for frontend app
+if (process.env.NODE_ENV === "production") {
+  const _dirname = path.dirname(fileURLToPath(import.meta.url));
+
+  app.use(express.static(path.join(-dirname, "../frontend/dist")));
+
+  // serve the frontend app
+  app.use(/.*/, (req, res) => {
+    res.send(path.join(_dirname, '..', 'frontend', 'dist', 'index.html'))
+  })
+
+}
 
 // Error handles
 app.use(loggers);
@@ -59,7 +75,7 @@ app.use(globalErrorHandler);
 
 mongoose
   .connect(
-    process.env.MODE_ENV == "development"
+    process.env.NODE_ENV == "development"
       ? process.env.MONGO_URI_DEV
       : process.env.MONGO_URI_PRO,
   )
