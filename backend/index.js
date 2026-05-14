@@ -3,6 +3,8 @@ const app = express();
 
 app.use(express.json());
 
+// const API_URL = "https://expense-tracker-w2f1.onrender.com"
+
 import path from "path";
 import { fileURLToPath } from "url";
 
@@ -29,7 +31,7 @@ import cors from "cors";
 app.use(helmet());
 app.use(
   cors({
-    origin: ["http://localhost:5173"],
+    origin: ["https://expense-tracker-w2f1.onrender.com/api"],
   }),
 );
 
