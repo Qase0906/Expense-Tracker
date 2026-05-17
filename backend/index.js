@@ -9,7 +9,8 @@ import { fileURLToPath } from "url";
 import dotenv from "dotenv";
 dotenv.config();
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 3000;
+
 
 // Imports
 import authRoutes from "./Routes/auth.js";
@@ -69,7 +70,7 @@ if (process.env.NODE_ENV === "production") {
 
   app.use(express.static(path.join(_dirname, "../frontend/dist")));
 
-  app.get(/.*/, (req, res) => {
+  app.use((req, res) => {
     res.sendFile(path.resolve(_dirname, "../frontend/dist/index.html"));
   });
 }
@@ -84,6 +85,9 @@ const mongoURI =
     ? process.env.MONGO_URI_DEV
     : process.env.MONGO_URI_PRO;
 
+console.log("ENV:", process.env.NODE_ENV);
+console.log("MONGO URI:", mongoURI);
+
 mongoose
   .connect(mongoURI)
   .then(() => {
@@ -97,6 +101,4 @@ mongoose
     console.error("MongoDB connection failed:", err);
   });
 
-// app.listen(PORT, () => {
-//   console.log(`Server is running: http://localhost:${PORT}`);
-// });
+
